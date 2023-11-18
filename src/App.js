@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import "./App.css";
+import Dust from "./icons/Dust.png";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="grid grid-cols-3">
+      <div className="col-span-2">
+        <div className="flex gap-2 items-center border border-solid">
+          <FontAwesomeIcon icon={faSearch} />
+          <input
+            type="text"
+            placeholder="Search location..."
+            name="location"
+            className="w-full"
+          />
+        </div>
+        <div className="p-16 flex justify-between">
+          <div>
+            <div className="font-bold text-3xl">London</div>
+            <div>Sunday, 19 November 09:45</div>
+          </div>
+          <img src={Dust} alt="dust"/>
+        </div>
+      </div>
+      <div>weather in coming days</div>
     </div>
   );
 }
