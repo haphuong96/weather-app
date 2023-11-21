@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar";
 // import Dust from "./icons/Dust.png";
@@ -12,12 +13,19 @@ function App() {
 
   const { View: Sunny } = useLottie(options);
 
-  const loadWeather = async () => {};
+  const [locationKey, setLocationKey] = useState<string>("");
+
+  const searchWeatherByLocation = async (locationKey: string) => {
+    
+  };
 
   return (
-    <div className="grid grid-cols-3">
+    <div className="grid gap-4 grid-cols-3">
       <div className="col-span-2">
-        <SearchBar />
+        <SearchBar
+          locationKey={locationKey}
+          onSearch={searchWeatherByLocation}
+        />
         <div className="p-16 flex justify-between">
           <div>
             <div className="font-bold text-3xl">London</div>
