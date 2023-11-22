@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Location } from "../interfaces/location";
+import locationApi from "./api-call-location.json";
 
 export const searchLocationByKey = async (
   locationSearchKey: string
@@ -20,6 +21,7 @@ export const searchLocationByKey = async (
       }
     )
   ).data;
+  // const response = locationApi;
   console.log(response);
 
   return response.map((location: any) => ({
