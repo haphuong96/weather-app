@@ -12,3 +12,20 @@ export interface Weather {
     UVIndex: number;
     UVIndexText: string;
 }
+
+export interface HourlyForecastWeather {
+    localDateTime: string;
+    weatherIcon: number;
+    temperature: string; //degree celsius
+    humidity: number; //percentage
+    isDayTime: boolean;
+    weatherText: string;
+}
+
+export interface DailyForecastWeather {
+    localDateTime: string;
+    weatherIcon: number;
+    weatherText: string;
+    temperatureMinimum: string; //degree celsius
+    temperatureMaximum: string; //degree celsius
+}

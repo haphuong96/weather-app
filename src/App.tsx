@@ -2,10 +2,16 @@ import { useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar";
 import { Location } from "./interfaces/location";
-import { searchWeatherByLocationKey } from "./api/weather";
-import { Weather } from "./interfaces/weather";
-import { format } from "date-fns";
-import { formatInTimeZone } from "date-fns-tz";
+import {
+  searchDailyForecastWeatherByLocationKey,
+  searchHourlyForecastWeatherByLocationKey,
+  searchWeatherByLocationKey,
+} from "./api/weather";
+import {
+  DailyForecastWeather,
+  HourlyForecastWeather,
+  Weather,
+} from "./interfaces/weather";
 import WeatherIcon from "./components/WeatherIcon";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -14,15 +20,7 @@ import {
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
 import { faDroplet } from "@fortawesome/free-solid-svg-icons";
-/**
- * Return date in format 'EEEE, dd MMMM HH:mm'. For i.e: Monday, 22 November 03:17
- * @param date time in format yyyy-mm-ddThh:mm:ss[+/-hh:mm].For i.e: 2023-11-22T03:17:00+09:00
- */
-const dateFormatter = (date: string): string => {
-  const timezone = date.substring(date.length - 6, date.length);
-  const parsedDate = new Date(date);
-  return formatInTimeZone(parsedDate, timezone, "EEEE, dd MMMM HH:mm");
-};
+import { datetimeFormatter } from "./utils/datetime-format";
 
 function App() {
   const [location, setLocation] = useState<Location>({
@@ -33,35 +31,59 @@ function App() {
   });
 
   const [weather, setWeather] = useState<Weather>();
+  const [hourlyForecasts, setHourlyForecasts] = useState<
+    HourlyForecastWeather[]
+  >([]);
+  const [dailyForecasts, setDailyForecasts] = useState<DailyForecastWeather[]>(
+    []
+  );
 
   const searchWeatherByLocation = async (location: Location) => {
-    console.log("location " + location);
     setLocation(location);
 
     // search weather by location
     setWeather(await searchWeatherByLocationKey(location.key));
+
+    //search weather forecast by location
+    setHourlyForecasts(
+      (await searchHourlyForecastWeatherByLocationKey(location.key)).slice(0, 5)
+    );
+
+    //search daily weather forecast by location
+    setDailyForecasts(
+      await searchDailyForecastWeatherByLocationKey(location.key)
+    );
   };
 
   return (
     <div
-      className={`fixed w-full h-full bg-gradient-to-r ${
+      className={`fixed w-full h-full bg-gradient-to-r p-5 ${
         !weather?.isDayTime
           ? "from-cyan-800 to-blue-800"
           : "from-blue-50 to-yellow-50"
       }`}
     >
-      <div className="grid gap-4 grid-cols-3 p-5">
+      <div className="grid grid-cols-3 mb-2">
         <div className="col-span-2">
           <SearchBar location={location} onSearch={searchWeatherByLocation} />
+        </div>
+      </div>
+      <div className="grid grid-cols-3 gap-8">
+        <div className="col-span-2">
           {weather && (
-            <div>
+            <div className="pb-16">
               <div className="p-16 flex justify-between">
                 <div className="flex flex-col justify-between">
                   <div>
                     <div className="font-bold text-3xl">
                       {location.cityName}
                     </div>
-                    <div>{dateFormatter(weather.localObservationDateTime)}</div>
+                    <div>
+                      {datetimeFormatter(
+                        weather.localObservationDateTime,
+                        "EEEE, dd MMMM HH:mm"
+                      )}
+                    </div>
                   </div>
                   <div>
                     <div className="text-2xl">{weather.temperature}</div>
@@ -70,11 +92,12 @@ function App() {
                 </div>
                 <WeatherIcon
                   weatherText={weather.weatherText}
+                  weatherIcon={weather.weatherIcon}
                   isDayTime={weather.isDayTime}
                 />
                 {/* <img src={Dust} alt="dust"/> */}
               </div>
-              <div className="grid grid-cols-2 gap-y-10 px-16">
+              <div className="grid grid-cols-4 gap-y-8 pl-16">
                 <div className="flex">
                   <div>
                     <FontAwesomeIcon icon={faTemperatureHalf} />
@@ -116,10 +139,64 @@ function App() {
               </div>
             </div>
           )}
+          {hourlyForecasts.length > 0 && (
+            <div>
+              <div className="pb-4 font-bold">Hourly Forecast</div>
+              <div className="grid grid-cols-5 h-full border rounded-md p-4">
+                {hourlyForecasts.map((hourlyForecasts) => (
+                  <div className="flex flex-col justify-between items-center">
+                    {/* <div>{hourlyForecasts.weatherText}</div> */}
+                    <div>
+                      {datetimeFormatter(
+                        hourlyForecasts.localDateTime,
+                        "HH:mm"
+                      )}
+                    </div>
+                    <WeatherIcon
+                      weatherText={hourlyForecasts.weatherText}
+                      weatherIcon={hourlyForecasts.weatherIcon}
+                      isDayTime={hourlyForecasts.isDayTime}
+                      style={{ height: 100 }}
+                    />
+                    <div>{hourlyForecasts.temperature}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
         <div>
-          {/* 5-day forecast */}
-          </div>
+          <div className="pb-4 font-bold">Daily Forecast</div>
+          {dailyForecasts.length > 0 && (
+            <div className="grid grid-rows-5 h-full border rounded-md p-4">
+              {dailyForecasts.map((dailyForecast) => (
+                <div className="grid grid-cols-3 gap-8 items-center pb-2">
+                  {/* <div>{dailyForecast.weatherText}</div> */}
+                  <div>
+                    {datetimeFormatter(dailyForecast.localDateTime, "EEEE")}
+                  </div>
+                  <div>
+                    <WeatherIcon
+                      weatherText={dailyForecast.weatherText}
+                      weatherIcon={dailyForecast.weatherIcon}
+                      isDayTime={true}
+                      style={{ height: 100 }}
+                    />
+                    {/* <div className="text-center">{dailyForecast.weatherText}</div> */}
+                  </div>
+                  <div>
+                    <span className="px-2">
+                      {dailyForecast.temperatureMaximum}
+                    </span>
+                    <span className="px-2 font-light">
+                      {dailyForecast.temperatureMinimum}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
