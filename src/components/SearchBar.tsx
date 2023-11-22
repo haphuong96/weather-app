@@ -14,12 +14,19 @@ import { searchLocationByKey } from "../api/location";
 //   // Add more fake data as needed
 // ];
 
-export default function SearchBar({ locationKey, onSearch } : {locationKey: string, onSearch: (key: string) => void}) {
+export default function SearchBar({
+  location,
+  onSearch,
+}: {
+  location: Location;
+  onSearch: (location: Location) => Promise<void>;
+}) {
   const [timer, setTimer] = useState<NodeJS.Timeout>();
   const [locationSearchResults, setLocationSearchResults] = useState<
     Location[]
   >([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isDisplayedList, setIsDisplayedList] = useState<boolean>(false);
 
   const onLocationInputChange = (input: string) => {
     clearTimeout(timer);
@@ -47,19 +54,31 @@ export default function SearchBar({ locationKey, onSearch } : {locationKey: stri
           type="text"
           placeholder="Search location..."
           name="location"
-          className="w-full focus-visible:outline-none"
+          className="w-full focus-visible:outline-none bg-transparent"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             onLocationInputChange(e.target.value)
           }
-          onFocus={(e) => setIsFocused(true)}
-          onBlur={(e) => setIsFocused(false)}
+          onFocus={(e) => {
+            setIsDisplayedList(true);
+            setIsFocused(true);
+          }}
+          onBlur={(e) => {
+            setIsFocused(false);
+          }}
         />
       </div>
 
-      {locationSearchResults.length > 0 && isFocused && (
+      {locationSearchResults.length > 0 && (isFocused || isDisplayedList) && (
         <ul className="absolute w-full border border-gray rounded bg-white">
           {locationSearchResults.map((location) => (
-            <li key={location.key} className="hover:bg-gray-100 cursor-pointer" onClick={() => onSearch(location.key)}>
+            <li
+              key={location.key}
+              className="hover:bg-gray-100 cursor-pointer"
+              onClick={(e) => {
+                setIsDisplayedList(false);
+                onSearch(location);
+              }}
+            >
               {location.cityName}, {location.administrativeAreaName},{" "}
               {location.countryId}
             </li>
