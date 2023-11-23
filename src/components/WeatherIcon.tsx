@@ -4,6 +4,7 @@ import night from "../icons/night.json";
 import partlyCloudy from "../icons/partly-cloudy.json";
 import cloudy from "../icons/windy.json";
 import nightPartlyCloudy from "../icons/night-cloudy.json";
+import partlyShower from "../icons/partly-shower.json";
 import { useLottie } from "lottie-react";
 
 const weatherIconDay = [
@@ -18,13 +19,13 @@ const weatherIconDay = [
   sunny,
   sunny,
   sunny,
+  partlyShower,
   sunny,
   sunny,
   sunny,
   sunny,
   sunny,
-  sunny,
-  sunny,
+  partlyShower,
   sunny,
   sunny,
   sunny,
@@ -60,7 +61,7 @@ const weatherIconNight = [
   night,
   night,
   night,
-  night,
+  cloudy,
   night,
   night,
   night,

@@ -57,10 +57,11 @@ function App() {
 
   return (
     <div
-      className={`fixed w-full h-full bg-gradient-to-r p-5 ${
+      className={`h-screen overflow-auto bg-gradient-to-r p-5 ${
         !weather?.isDayTime
           ? "from-cyan-800 to-blue-800"
-          : "from-blue-50 to-yellow-50"
+          : // "from-sky-200 to-blue-300"
+            "from-blue-50 to-yellow-50"
       }`}
     >
       <div className="grid grid-cols-3 mb-2">
@@ -69,7 +70,7 @@ function App() {
         </div>
       </div>
       <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-2">
+        <div className="col-span-2 flex flex-col justify-between">
           {weather && (
             <div className="pb-16">
               <div className="p-16 flex justify-between">
@@ -142,7 +143,7 @@ function App() {
           {hourlyForecasts.length > 0 && (
             <div>
               <div className="pb-4 font-bold">Hourly Forecast</div>
-              <div className="grid grid-cols-5 h-full border rounded-md p-4">
+              <div className="grid grid-cols-5 border rounded-md p-4">
                 {hourlyForecasts.map((hourlyForecasts) => (
                   <div className="flex flex-col justify-between items-center">
                     {/* <div>{hourlyForecasts.weatherText}</div> */}
@@ -165,10 +166,10 @@ function App() {
             </div>
           )}
         </div>
-        <div>
+        <div className="flex flex-col ">
           <div className="pb-4 font-bold">Daily Forecast</div>
           {dailyForecasts.length > 0 && (
-            <div className="grid grid-rows-5 h-full border rounded-md p-4">
+            <div className="flex-grow grid grid-rows-5 border rounded-md p-4">
               {dailyForecasts.map((dailyForecast) => (
                 <div className="grid grid-cols-3 gap-8 items-center pb-2">
                   {/* <div>{dailyForecast.weatherText}</div> */}
@@ -182,7 +183,7 @@ function App() {
                       isDayTime={true}
                       style={{ height: 100 }}
                     />
-                    {/* <div className="text-center">{dailyForecast.weatherText}</div> */}
+                    <div className="text-center">{dailyForecast.weatherText}</div>
                   </div>
                   <div>
                     <span className="px-2">
