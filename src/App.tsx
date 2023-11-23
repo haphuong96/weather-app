@@ -58,10 +58,10 @@ function App() {
   return (
     <div
       className={`h-screen overflow-auto bg-gradient-to-r p-5 ${
-        !weather?.isDayTime
-          ? "from-cyan-800 to-blue-800"
+        weather?.isDayTime
+          ? "from-blue-50 to-yellow-50"
           : // "from-sky-200 to-blue-300"
-            "from-blue-50 to-yellow-50"
+            "from-cyan-800 to-blue-800 text-slate-200"
       }`}
     >
       <div className="grid grid-cols-3 mb-2">
@@ -159,6 +159,7 @@ function App() {
                       isDayTime={hourlyForecasts.isDayTime}
                       style={{ height: 100 }}
                     />
+                    <div>{hourlyForecasts.weatherText}</div>
                     <div>{hourlyForecasts.temperature}</div>
                   </div>
                 ))}
@@ -166,9 +167,10 @@ function App() {
             </div>
           )}
         </div>
-        <div className="flex flex-col ">
-          <div className="pb-4 font-bold">Daily Forecast</div>
-          {dailyForecasts.length > 0 && (
+        {dailyForecasts.length > 0 && (
+          <div className="flex flex-col ">
+            <div className="pb-4 font-bold">Daily Forecast</div>
+
             <div className="flex-grow grid grid-rows-5 border rounded-md p-4">
               {dailyForecasts.map((dailyForecast) => (
                 <div className="grid grid-cols-3 gap-8 items-center pb-2">
@@ -183,21 +185,23 @@ function App() {
                       isDayTime={true}
                       style={{ height: 100 }}
                     />
-                    <div className="text-center">{dailyForecast.weatherText}</div>
+                    <div className="text-center">
+                      {dailyForecast.weatherText}
+                    </div>
                   </div>
-                  <div>
-                    <span className="px-2">
+                  <div className="flex justify-between">
+                    <div>
                       {dailyForecast.temperatureMaximum}
-                    </span>
-                    <span className="px-2 font-light">
+                    </div>
+                    <div className="ml-2 font-light">
                       {dailyForecast.temperatureMinimum}
-                    </span>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

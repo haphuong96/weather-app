@@ -34,7 +34,7 @@ export default function SearchBar({
     setTimer(
       setTimeout(async () => {
         await searchLocations(input);
-      }, 2000)
+      }, 1000)
     );
   };
 
@@ -69,11 +69,11 @@ export default function SearchBar({
       </div>
 
       {locationSearchResults.length > 0 && (isFocused || isDisplayedList) && (
-        <ul className="absolute w-full border border-gray rounded bg-white">
+        <ul className="absolute z-10 w-full border border-gray bg-slate-50 rounded text-black">
           {locationSearchResults.map((location) => (
             <li
               key={location.key}
-              className="hover:bg-gray-100 cursor-pointer"
+              className="hover:bg-slate-400 cursor-pointer px-2"
               onClick={(e) => {
                 setIsDisplayedList(false);
                 onSearch(location);

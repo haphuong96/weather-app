@@ -5,6 +5,13 @@ import partlyCloudy from "../icons/partly-cloudy.json";
 import cloudy from "../icons/windy.json";
 import nightPartlyCloudy from "../icons/night-cloudy.json";
 import partlyShower from "../icons/partly-shower.json";
+import nightRain from "../icons/night-rain.json";
+import snow from "../icons/snow.json";
+import snowSunny from "../icons/snow-sunny.json";
+import snowNight from "../icons/night-snow.json";
+import thunderstorm from "../icons/storm.json";
+import sunnyStorm from "../icons/storm-sunny.json";
+import fog from "../icons/mist.json";
 import { useLottie } from "lottie-react";
 
 const weatherIconDay = [
@@ -18,19 +25,19 @@ const weatherIconDay = [
   sunny,
   sunny,
   sunny,
-  sunny,
+  fog,
+  partlyShower,
+  partlyShower,
+  partlyShower,
+  thunderstorm,
+  sunnyStorm,
+  sunnyStorm,
   partlyShower,
   sunny,
   sunny,
   sunny,
-  sunny,
-  sunny,
-  partlyShower,
-  sunny,
-  sunny,
-  sunny,
-  sunny,
-  sunny,
+  snow,
+  snowSunny,
   sunny,
   sunny,
   sunny,
@@ -65,18 +72,18 @@ const weatherIconNight = [
   night,
   night,
   night,
+  fog,
+  nightRain,
+  night,
+  night,
+  thunderstorm,
   night,
   night,
   night,
   night,
   night,
   night,
-  night,
-  night,
-  night,
-  night,
-  night,
-  night,
+  snow,
   night,
   night,
   night,
@@ -92,13 +99,13 @@ const weatherIconNight = [
   nightPartlyCloudy,
   night,
   night,
+  nightPartlyCloudy,
+  nightRain,
+  nightRain,
+  thunderstorm,
+  thunderstorm,
   night,
-  night,
-  night,
-  night,
-  night,
-  night,
-  night,
+  snowNight,
 ];
 
 export default function WeatherIcon({
