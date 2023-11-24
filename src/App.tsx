@@ -65,17 +65,17 @@ function App() {
       }`}
     >
       <div className="grid grid-cols-3 mb-2">
-        <div className="col-span-2">
+        <div className="col-span-3 md:col-span-2">
           <SearchBar location={location} onSearch={searchWeatherByLocation} />
         </div>
       </div>
       <div className="grid grid-cols-3 gap-8">
-        <div className="col-span-2 flex flex-col justify-between">
+        <div className="col-span-3 md:col-span-2 flex flex-col justify-between">
           {weather && (
             <div className="pb-16">
-              <div className="p-16 flex justify-between">
-                <div className="flex flex-col justify-between">
-                  <div>
+              <div className="p-16 sm:flex justify-between">
+                <div className="sm:flex sm:flex-col justify-between">
+                  <div className="flex flex-col items-center sm:flex-none sm:items-start">
                     <div className="font-bold text-3xl">
                       {location.cityName}
                     </div>
@@ -86,7 +86,7 @@ function App() {
                       )}
                     </div>
                   </div>
-                  <div>
+                  <div className="hidden sm:display-block">
                     <div className="text-2xl">{weather.temperature}</div>
                     <div>{weather.weatherText}</div>
                   </div>
@@ -96,10 +96,14 @@ function App() {
                   weatherIcon={weather.weatherIcon}
                   isDayTime={weather.isDayTime}
                 />
+                <div className="display-block flex flex-col items-center sm:hidden">
+                  <div className="text-2xl">{weather.temperature}</div>
+                  <div>{weather.weatherText}</div>
+                </div>
                 {/* <img src={Dust} alt="dust"/> */}
               </div>
-              <div className="grid grid-cols-4 gap-y-8 pl-16">
-                <div className="flex">
+              <div className="grid grid-cols-2 justify-items-stretch xs:grid-cols-4 gap-y-8 sm:pl-16">
+                <div className="justify-self-center xs:justify-self-start flex">
                   <div>
                     <FontAwesomeIcon icon={faTemperatureHalf} />
                   </div>
@@ -110,7 +114,7 @@ function App() {
                     </div>
                   </div>
                 </div>
-                <div className="flex">
+                <div className="justify-self-center flex">
                   <div>
                     <FontAwesomeIcon icon={faDroplet} />
                   </div>
@@ -119,7 +123,7 @@ function App() {
                     <div className="text-xl">{weather?.relativeHumidity} %</div>
                   </div>
                 </div>
-                <div className="flex">
+                <div className="justify-self-center flex">
                   <div>
                     <FontAwesomeIcon icon={faSun} />
                   </div>
@@ -128,7 +132,7 @@ function App() {
                     <div className="text-xl">{weather?.UVIndex}</div>
                   </div>
                 </div>
-                <div className="flex">
+                <div className="justify-self-center flex">
                   <div>
                     <FontAwesomeIcon icon={faWind} />
                   </div>
@@ -145,7 +149,7 @@ function App() {
               <div className="pb-4 font-bold">Hourly Forecast</div>
               <div className="grid grid-cols-5 border rounded-md p-4">
                 {hourlyForecasts.map((hourlyForecasts) => (
-                  <div className="flex flex-col justify-between items-center">
+                  <div className="flex flex-col justify-between items-center text-center">
                     {/* <div>{hourlyForecasts.weatherText}</div> */}
                     <div>
                       {datetimeFormatter(
@@ -159,7 +163,7 @@ function App() {
                       isDayTime={hourlyForecasts.isDayTime}
                       style={{ height: 100 }}
                     />
-                    <div>{hourlyForecasts.weatherText}</div>
+                    <div className="hidden sm:display-block">{hourlyForecasts.weatherText}</div>
                     <div>{hourlyForecasts.temperature}</div>
                   </div>
                 ))}
@@ -168,7 +172,7 @@ function App() {
           )}
         </div>
         {dailyForecasts.length > 0 && (
-          <div className="flex flex-col ">
+          <div className="flex flex-col col-span-3 md:col-span-1">
             <div className="pb-4 font-bold">Daily Forecast</div>
 
             <div className="flex-grow grid grid-rows-5 border rounded-md p-4">
@@ -185,15 +189,15 @@ function App() {
                       isDayTime={true}
                       style={{ height: 100 }}
                     />
-                    <div className="text-center">
+                    <div className="text-center hidden sm:display-block">
                       {dailyForecast.weatherText}
                     </div>
                   </div>
-                  <div className="flex justify-between">
-                    <div>
+                  <div className="flex flex-wrap justify-between">
+                    <div className="mx-1">
                       {dailyForecast.temperatureMaximum}
                     </div>
-                    <div className="ml-2 font-light">
+                    <div className="mx-1 font-light">
                       {dailyForecast.temperatureMinimum}
                     </div>
                   </div>
