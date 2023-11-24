@@ -112,14 +112,13 @@ export default function WeatherIcon({
   weatherText,
   weatherIcon,
   isDayTime,
-  style
+  style,
 }: {
   weatherText: string;
   weatherIcon: number;
   isDayTime: boolean;
   style?: React.CSSProperties;
 }) {
-  const weatherTextKey = weatherText.toLowerCase();
   const options = {
     animationData: isDayTime
       ? weatherIconDay[weatherIcon - 1]
@@ -128,64 +127,3 @@ export default function WeatherIcon({
   const { View } = useLottie(options, style);
   return View;
 }
-
-// const weatherIconMapDay: { [key: string]: any } = {
-//   sunny: sunny,
-//   "mostly sunny": sunny,
-//   "partly sunny": sunny,
-//   "intermittent clouds": sunny,
-//   "hazy sunshine": sunny,
-//   "mostly cloudy": sunny,
-//   cloudy: sunny,
-//   "dreary (overcast)": sunny,
-//   fog: sunny,
-//   showers: sunny,
-//   "mostly cloudy w/ showers": sunny,
-//   "partly sunny w/ showers": sunny,
-//   "t-storms": sunny,
-//   "mostly cloudy w/ t-storms": sunny,
-//   "partly sunny w/ t-storms": sunny,
-//   rain: sunny,
-//   flurries: sunny,
-//   "mostly cloudy w/ flurries": sunny,
-//   "partly sunny w/ flurries": sunny,
-//   snow: sunny,
-//   "mostly cloudy w/ snow": sunny,
-//   ice: sunny,
-//   sleet: sunny,
-//   "freezing rain": sunny,
-//   "rain and snow": sunny,
-//   hot: sunny,
-//   cold: sunny,
-//   windy: sunny,
-// };
-
-// const weatherIconMapNight: { [key: string]: any } = {
-//   cloudy: night,
-//   "dreary (overcast)": night,
-//   fog: night,
-//   showers: night,
-//   "t-storms": night,
-//   rain: night,
-//   flurries: night,
-//   snow: night,
-//   ice: night,
-//   sleet: night,
-//   "freezing rain": night,
-//   "rain and snow": night,
-//   hot: night,
-//   cold: night,
-//   windy: night,
-//   clear: night,
-//   "mostly clear": "night",
-//   "partly cloudy": night,
-//   "intermittent clouds": night,
-//   "hazy moonlight": night,
-//   "mostly cloudy": night,
-//   "partly cloudy w/showers": night,
-//   "mostly cloudy w/ showers": night,
-//   "partly cloudy w/ t-storms": night,
-//   "mostly cloudy w/ t-storms": night,
-//   "mostly cloudy w/ flurries": night,
-//   "mostly cloudy w/ snow": night,
-// };

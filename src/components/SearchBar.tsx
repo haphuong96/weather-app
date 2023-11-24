@@ -1,18 +1,8 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 import { Location } from "../interfaces/location";
 import { searchLocationByKey } from "../api/location";
-
-// const fakeData = [
-//   "Result 1",
-//   "Result 2",
-//   "Result 3",
-//   "Result 4",
-//   "Result 5",
-//   // Add more fake data as needed
-// ];
 
 export default function SearchBar({
   location,
@@ -86,43 +76,5 @@ export default function SearchBar({
         </ul>
       )}
     </div>
-    // list of found locations
   );
-  // const [searchTerm, setSearchTerm] = useState("");
-  // const [searchResults, setSearchResults] = useState<string[]>([]);
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const term = e.target.value;
-  //   setSearchTerm(term);
-
-  //   // Filter results based on the search term
-  //   const filteredResults = fakeData.filter((result) =>
-  //     result.toLowerCase().includes(term.toLowerCase())
-  //   );
-
-  //   setSearchResults(filteredResults);
-  // };
-
-  // return (
-  //   <div className="relative mt-8">
-  //     <input
-  //       type="text"
-  //       value={searchTerm}
-  //       onChange={handleChange}
-  //       placeholder="Search..."
-  //       className="py-2 px-4 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-4"
-  //     />
-  //     {searchResults.length > 0 && (
-  //       <div className="absolute top-full left-0 bg-white border border-gray-300 shadow-md p-4 rounded-md z-10">
-  //         <ul className="list-none p-0">
-  //           {searchResults.map((result, index) => (
-  //             <li key={index} className="mb-2">
-  //               {result}
-  //             </li>
-  //           ))}
-  //         </ul>
-  //       </div>
-  //     )}
-  //   </div>
-  // );
 }

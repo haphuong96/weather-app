@@ -1,6 +1,5 @@
 import axios from "axios";
 import { DailyForecastWeather, HourlyForecastWeather, Weather } from "../interfaces/weather";
-import weatherApi from "./api-call.json";
 
 export const searchWeatherByLocationKey = async (
   locationKey: string
@@ -9,7 +8,7 @@ export const searchWeatherByLocationKey = async (
 
   const response = (
     await axios.get(
-      `http://dataservice.accuweather.com/currentconditions/v1/${locationKey}`,
+      `https://dataservice.accuweather.com/currentconditions/v1/${locationKey}`,
       {
         params: {
           apikey: process.env.REACT_APP_API_KEY,
@@ -49,7 +48,7 @@ export const searchHourlyForecastWeatherByLocationKey = async (
 
   const response = (
     await axios.get(
-      `http://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}`,
+      `https://dataservice.accuweather.com/forecasts/v1/hourly/12hour/${locationKey}`,
       {
         params: {
           apikey: process.env.REACT_APP_API_KEY,
@@ -59,8 +58,6 @@ export const searchHourlyForecastWeatherByLocationKey = async (
       }
     )
   ).data;
-
-  // const response = weatherApi;
 
   return response.map((weather: any) => ({
     localDateTime: weather.DateTime,
@@ -79,7 +76,7 @@ export const searchDailyForecastWeatherByLocationKey = async (
 
   const response = (
     await axios.get(
-      `http://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}`,
+      `https://dataservice.accuweather.com/forecasts/v1/daily/5day/${locationKey}`,
       {
         params: {
           apikey: process.env.REACT_APP_API_KEY,
