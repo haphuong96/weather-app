@@ -73,8 +73,8 @@ function App() {
         <div className="col-span-3 md:col-span-2 flex flex-col justify-between">
           {weather && (
             <div className="pb-16">
-              <div className="p-16 sm:flex justify-between">
-                <div className="sm:flex sm:flex-col justify-between">
+              <div className="p-16 flex flex-col sm:flex-row justify-between">
+                <div className="contents sm:display-block sm:flex sm:flex-col sm:justify-between">
                   <div className="flex flex-col items-center sm:flex-none sm:items-start">
                     <div className="font-bold text-3xl">
                       {location.cityName}
@@ -86,21 +86,18 @@ function App() {
                       )}
                     </div>
                   </div>
-                  <div className="hidden sm:display-block">
+                  <div className="order-last sm:order-none flex flex-col items-center sm:items-start">
                     <div className="text-2xl">{weather.temperature}</div>
                     <div>{weather.weatherText}</div>
                   </div>
                 </div>
-                <WeatherIcon
-                  weatherText={weather.weatherText}
-                  weatherIcon={weather.weatherIcon}
-                  isDayTime={weather.isDayTime}
-                />
-                <div className="display-block flex flex-col items-center sm:hidden">
-                  <div className="text-2xl">{weather.temperature}</div>
-                  <div>{weather.weatherText}</div>
+                <div>
+                  <WeatherIcon
+                    weatherText={weather.weatherText}
+                    weatherIcon={weather.weatherIcon}
+                    isDayTime={weather.isDayTime}
+                  />
                 </div>
-                {/* <img src={Dust} alt="dust"/> */}
               </div>
               <div className="grid grid-cols-2 justify-items-stretch xs:grid-cols-4 gap-y-8 sm:pl-16">
                 <div className="justify-self-center xs:justify-self-start flex">
@@ -114,7 +111,7 @@ function App() {
                     </div>
                   </div>
                 </div>
-                <div className="justify-self-center flex">
+                <div className="justify-self-center xs:justify-self-start flex">
                   <div>
                     <FontAwesomeIcon icon={faDroplet} />
                   </div>
@@ -123,7 +120,7 @@ function App() {
                     <div className="text-xl">{weather?.relativeHumidity} %</div>
                   </div>
                 </div>
-                <div className="justify-self-center flex">
+                <div className="justify-self-center xs:justify-self-start flex">
                   <div>
                     <FontAwesomeIcon icon={faSun} />
                   </div>
@@ -132,7 +129,7 @@ function App() {
                     <div className="text-xl">{weather?.UVIndex}</div>
                   </div>
                 </div>
-                <div className="justify-self-center flex">
+                <div className="justify-self-center xs:justify-self-start flex">
                   <div>
                     <FontAwesomeIcon icon={faWind} />
                   </div>
@@ -163,7 +160,9 @@ function App() {
                       isDayTime={hourlyForecasts.isDayTime}
                       style={{ height: 100 }}
                     />
-                    <div className="hidden sm:display-block">{hourlyForecasts.weatherText}</div>
+                    <div className="weather-text-responsive">
+                      {hourlyForecasts.weatherText}
+                    </div>
                     <div>{hourlyForecasts.temperature}</div>
                   </div>
                 ))}
@@ -189,7 +188,7 @@ function App() {
                       isDayTime={true}
                       style={{ height: 100 }}
                     />
-                    <div className="text-center hidden sm:display-block">
+                    <div className="text-center weather-text-responsive">
                       {dailyForecast.weatherText}
                     </div>
                   </div>
