@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import SearchBar from "./components/SearchBar";
 import { Location } from "./interfaces/location";
@@ -55,14 +55,23 @@ function App() {
     );
   };
 
+  // theme color & text color
+  const [theme, setTheme] = useState<string>("");
+  const [textColor, setTextColor] = useState<string>("");
+
+  useEffect(() => {
+    if (weather?.isDayTime) {
+      setTheme("from-blue-50 to-yellow-50");
+      setTextColor("text-black");
+    } else {
+      setTheme("from-cyan-800 to-blue-800");
+      setTextColor("text-slate-200");
+    }
+  }, [weather]);
+
   return (
     <div
-      className={`h-screen overflow-auto bg-gradient-to-r p-5 ${
-        weather?.isDayTime
-          ? "from-blue-50 to-yellow-50"
-          : // "from-sky-200 to-blue-300"
-            "from-cyan-800 to-blue-800 text-slate-200"
-      }`}
+      className={`h-screen overflow-auto bg-gradient-to-r p-5 ${theme} ${textColor}`}
     >
       <div className="grid grid-cols-3 mb-2">
         <div className="col-span-3 md:col-span-2">
@@ -73,13 +82,13 @@ function App() {
         <div className="col-span-3 md:col-span-2 flex flex-col justify-between">
           {weather && (
             <div className="pb-16">
-              <div className="p-16 flex flex-col sm:flex-row justify-between">
+              <div className="p-12 sm:p-16 flex flex-col sm:flex-row justify-between">
                 <div className="contents sm:display-block sm:flex sm:flex-col sm:justify-between">
-                  <div className="flex flex-col items-center sm:flex-none sm:items-start">
+                  <div className="flex flex-col items-center text-center sm:text-left sm:flex-none sm:items-start">
                     <div className="font-bold text-3xl">
                       {location.cityName}
                     </div>
-                    <div>
+                    <div className="w-full">
                       {datetimeFormatter(
                         weather.localObservationDateTime,
                         "EEEE, dd MMMM HH:mm"
@@ -91,7 +100,7 @@ function App() {
                     <div>{weather.weatherText}</div>
                   </div>
                 </div>
-                <div>
+                <div className="p-4">
                   <WeatherIcon
                     weatherText={weather.weatherText}
                     weatherIcon={weather.weatherIcon}
@@ -146,7 +155,7 @@ function App() {
               <div className="pb-4 font-bold">Hourly Forecast</div>
               <div className="grid grid-cols-5 border rounded-md p-4">
                 {hourlyForecasts.map((hourlyForecasts) => (
-                  <div className="flex flex-col justify-between items-center text-center">
+                  <div className="flex flex-col justify-between items-center text-center px-2">
                     {/* <div>{hourlyForecasts.weatherText}</div> */}
                     <div>
                       {datetimeFormatter(
@@ -176,9 +185,9 @@ function App() {
 
             <div className="flex-grow grid grid-rows-5 border rounded-md p-4">
               {dailyForecasts.map((dailyForecast) => (
-                <div className="grid grid-cols-3 gap-8 items-center pb-2">
+                <div className="grid grid-cols-3 mb-5 items-center">
                   {/* <div>{dailyForecast.weatherText}</div> */}
-                  <div>
+                  <div className="truncate">
                     {datetimeFormatter(dailyForecast.localDateTime, "EEEE")}
                   </div>
                   <div>
@@ -188,9 +197,6 @@ function App() {
                       isDayTime={true}
                       style={{ height: 100 }}
                     />
-                    <div className="text-center weather-text-responsive">
-                      {dailyForecast.weatherText}
-                    </div>
                   </div>
                   <div className="flex flex-wrap justify-between">
                     <div className="mx-1">
@@ -199,6 +205,9 @@ function App() {
                     <div className="mx-1 font-light">
                       {dailyForecast.temperatureMinimum}
                     </div>
+                  </div>
+                  <div className="text-center col-span-3 weather-text-responsive">
+                    {dailyForecast.weatherText}
                   </div>
                 </div>
               ))}
